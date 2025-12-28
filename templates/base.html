@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        body { font-family: Arial; background:#f4f4f4; margin:0; direction:rtl; }
+        header { background:#222; color:#fff; padding:15px; text-align:center; }
+        .container { max-width:900px; margin:20px auto; padding:20px; }
+        .card { background:#fff; padding:15px; margin-bottom:15px; border-radius:6px; }
+        a { color:#007bff; text-decoration:none; }
+        input, textarea { width:100%; padding:8px; margin-bottom:10px; }
+        button {
+            padding:10px 14px;
+            background:#007bff;
+            color:#fff;
+            border:none;
+            cursor:pointer;
+            border-radius:4px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simple Store</h1>
+    <a href="{{ url_for('home') }}" style="color:white;">المنتجات</a>
+</header>
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

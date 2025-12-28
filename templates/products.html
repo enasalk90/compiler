@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>قائمة المنتجات</h2>
+
+{% for product in products %}
+<div class="card">
+    <h3>{{ product.name }}</h3>
+    <p>السعر: ${{ product.price }}</p>
+    <a href="{{ url_for('product_details', product_id=product.id) }}">
+        عرض التفاصيل
+    </a>
+</div>
+{% endfor %}
+
+<a href="{{ url_for('add_product') }}">
+    <button>➕ إضافة منتج</button>
+</a>
+{% endblock %}
