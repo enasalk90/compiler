@@ -1,0 +1,48 @@
+from flask import Flask, render_template, request, redirect, url_for
+
+app = Flask(__name__)
+
+products = [
+    {
+        "id": 1,
+        "name": "Laptop",
+        "price": 1200,
+        "description": "Powerful laptop for work",
+        "image": "laptop.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Phone",
+        "price": 800,
+        "description": "Modern smartphone",
+        "image": "phone.jpg"
+    }
+]
+
+@app.route("/")
+@app.route("/products")
+def show_products():
+    return render_template("products.html", products=products)
+
+@app.route("/add", methods=["GET", "POST"])
+def add_product():
+    if request.method == "POST":
+        new_product = {
+            "id": len(products) + 1,
+            "name": request.form["name"],
+            "price": request.form["price"],
+            "description": request.form["description"],
+            "image": request.form["image"]
+        }
+        products.append(new_product)
+        return redirect(url_for("show_products"))
+
+    return render_template("add_product.html")
+
+@app.route("/product/<int:product_id>")
+def product_detail(product_id):
+    product = next((p for p in products if p["id"] == product_id), None)
+    return render_template("product_detail.html", product=product)
+
+if __name__ == "__main__":
+    app.run(debug=True)
