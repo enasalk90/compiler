@@ -6,6 +6,9 @@ import AST.Template.HtmlDocumentNode;
 import Visitor.PythonAstBuilder;
 import Visitor.TemplateAstBuilder;
 
+import SymbolTable.*;
+
+
 
 import Grammer.*;
 
@@ -39,6 +42,15 @@ public class Main {
             System.out.println("==============================");
 
             // =========================
+            // 2) PYTHON: Symbol Table
+            // =========================
+            PythonSymbolVisitor pySym = new PythonSymbolVisitor();
+            SymbolTable pyTable = pySym.collect(pyAst);
+
+            System.out.println("\n==== PYTHON SYMBOL TABLE ====");
+            pyTable.print();
+
+            // =========================
             // 3) TEMPLATE: لكل ملفات .html
             // =========================
             List<Path> htmlFiles = findHtmlFiles(Paths.get(TEMPLATE_DIR));
@@ -51,6 +63,14 @@ public class Main {
                 HtmlDocumentNode tplAst = parseTemplateFile(html.toString());
                 printAst("TEMPLATE AST :: " + html.getFileName(), tplAst);
 
+                // =========================
+                // 4) TEMPLATE: Symbol Table
+                // =========================
+                TemplateSymbolVisitor tplSym = new TemplateSymbolVisitor();
+                SymbolTable tplTable = tplSym.collect(tplAst);
+
+                System.out.println("\n==== TEMPLATE SYMBOL TABLE :: " + html.getFileName() + " ====");
+                tplTable.print();
             }
 
         } catch (Exception e) {
